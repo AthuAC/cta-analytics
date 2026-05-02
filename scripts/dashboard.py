@@ -118,5 +118,7 @@ app.layout = html.Div([
 
 ], style={"backgroundColor": "#f0f2f5", "minHeight": "100vh", "fontFamily": "Arial, sans-serif"})
 
+server = app.server
+
 if __name__ == "__main__":
     app.run(debug=True)
