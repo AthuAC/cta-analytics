@@ -134,7 +134,17 @@ app.layout = html.Div([
                         "boxShadow": "0 2px 4px rgba(0,0,0,0.1)"}),
     ], style={"display": "flex", "gap": "15px", "padding": "0 30px", "marginBottom": "30px"}),
 
+    # Footer
+    html.Div([
+        html.P("⚡ Powered by Snowflake | 📊 Data: Chicago Data Portal | 🚀 Deployed on Render",
+            style={"textAlign": "center", "color": "#999",
+                    "fontSize": "12px", "padding": "15px",
+                    "borderTop": "1px solid #ddd",
+                    "marginTop": "10px"})
+    ], style={"backgroundColor": "#f0f2f5"})
+
 ], style={"backgroundColor": "#f0f2f5", "minHeight": "100vh", "fontFamily": "Arial, sans-serif"})
+
 
 server = app.server
 
