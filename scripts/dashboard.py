@@ -1,11 +1,29 @@
 import pandas as pd
-from sqlalchemy import create_engine
+import snowflake.connector
+from dotenv import load_dotenv
+import os
 from dash import Dash, dcc, html
 import plotly.express as px
 
-# ── Load Data ─────────────────────────────────────────────────
-engine = create_engine("sqlite:///db/cta_analytics.db")
-df = pd.read_sql("SELECT * FROM ridership", engine)
+load_dotenv()
+
+# ── Load Data from Snowflake ──────────────────────────────────
+conn = snowflake.connector.connect(
+    user=os.getenv("SNOWFLAKE_USER"),
+    password=os.getenv("SNOWFLAKE_PASSWORD"),
+    account=os.getenv("SNOWFLAKE_ACCOUNT"),
+    warehouse=os.getenv("SNOWFLAKE_WAREHOUSE"),
+    database=os.getenv("SNOWFLAKE_DATABASE"),
+    schema=os.getenv("SNOWFLAKE_SCHEMA")
+)
+
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM CTA_DB.CTA_SCHEMA.RIDERSHIP")
+df = cursor.fetch_pandas_all()
+conn.close()
+
+# Fix column names to lowercase
+df.columns = df.columns.str.lower()
 df["service_date"] = pd.to_datetime(df["service_date"])
 df["year"] = df["service_date"].dt.year
 df["month_name"] = df["service_date"].dt.strftime("%B")
