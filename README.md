@@ -7,21 +7,21 @@ A data pipeline and analytics project built to analyze 25 years of Chicago Trans
 
 ## Live Demo & Repository
 
-- 🌐 **Live Dashboard:** [https://cta-analytics.onrender.com](https://cta-analytics.onrender.com)
-- 💻 **GitHub Repository:** [https://github.com/AthuAC/cta-analytics](https://github.com/AthuAC/cta-analytics)
+- 🌐 Live Dashboard: [https://cta-analytics.onrender.com](https://cta-analytics.onrender.com)
+- 💻 GitHub Repository:[https://github.com/AthuAC/cta-analytics](https://github.com/AthuAC/cta-analytics)
 
 > Note: The dashboard is hosted on Render's free tier and may take up to 50 seconds to load if it has been inactive.
 
 ---
 
 ## Data Source
-- **Platform:** Chicago Data Portal (data.cityofchicago.org)
-- **Dataset:** CTA Daily Boardings
-- **Dataset ID:** `6iiy-9s97`
-- **Access:** Public REST API, no authentication required
-- **Format:** CSV
-- **Coverage:** January 1, 2001 → February 28, 2026
-- **Total Records:** 9,190 rows
+- Platform: Chicago Data Portal (data.cityofchicago.org)
+- Dataset: CTA Daily Boardings
+- Dataset ID: `6iiy-9s97`
+- Access: Public REST API, no authentication required
+- Format: CSV
+- Coverage: January 1, 2001 → February 28, 2026
+- Total Records: 9,190 rows
 
 ---
 
@@ -39,11 +39,11 @@ A data pipeline and analytics project built to analyze 25 years of Chicago Trans
 ## Key Findings
 
 ### Overall Stats
-- **Total rides (25 years):** 11,110,964,887 (11.1 billion)
-- **Average rides per day:** 1,209,028 (1.2 million)
-- **Peak year:** 2012 — 545,577,922 rides
-- **Busiest single day:** July 3, 2008 — 2,049,519 rides
-- **Busiest month:** October | **Slowest month:** December
+- Total rides (25 years): 11,110,964,887 (11.1 billion)
+- Average rides per day: 1,209,028 (1.2 million)
+- Peak year: 2012 — 545,577,922 rides
+- Busiest single day: July 3, 2008 — 2,049,519 rides
+- Busiest month: October | Slowest month: December
 
 ### COVID Impact
 | Year | Total Rides | Change |
@@ -65,11 +65,29 @@ A data pipeline and analytics project built to analyze 25 years of Chicago Trans
 ---
 
 ## Tech Stack
-- **Language:** Python 3.14.4
-- **Libraries:** pandas, numpy, matplotlib, seaborn, plotly, dash, sqlalchemy, requests, openpyxl
-- **Database:** SQLite (via SQLAlchemy)
-- **Environment:** Virtual environment (.venv)
-- **Tools:** Homebrew, VS Code
+- Language: Python 3.14.4
+- Libraries: pandas, numpy, matplotlib, seaborn, plotly, dash, sqlalchemy, snowflake-connector-python, python-dotenv
+- Database: Snowflake Cloud Data Warehouse
+- Environment: Virtual environment (.venv)
+- Tools: Homebrew, VS Code
+- Deployment: Render
 
 ---
+
+## Project Structure
+
+cta-analytics/
+├── data/                  # Working CSV files
+├── raw/                   # Original untouched data
+├── processed/             # Cleaned/transformed data & charts
+├── db/                    # SQLite database (local dev)
+│   └── cta_analytics.db
+├── scripts/
+│   ├── load_data.py           # Ingests CSV into SQLite (local dev)
+│   ├── load_snowflake.py      # Loads data into Snowflake
+│   ├── analyze_data.py        # Runs key analyses
+│   ├── visualize_data.py      # Generates static charts
+│   └── dashboard.py           # Plotly Dash dashboard (Snowflake)
+└── README.md
+
 
