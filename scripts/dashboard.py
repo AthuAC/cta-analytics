@@ -10,12 +10,11 @@ load_dotenv()
 # ── Load Data from Snowflake ──────────────────────────────────
 conn = snowflake.connector.connect(
     user=os.getenv("SNOWFLAKE_USER"),
+    password=os.getenv("SNOWFLAKE_TOKEN"),
     account=os.getenv("SNOWFLAKE_ACCOUNT"),
     warehouse=os.getenv("SNOWFLAKE_WAREHOUSE"),
     database=os.getenv("SNOWFLAKE_DATABASE"),
-    schema=os.getenv("SNOWFLAKE_SCHEMA"),
-    authenticator="oauth",
-    token=os.getenv("SNOWFLAKE_TOKEN")
+    schema=os.getenv("SNOWFLAKE_SCHEMA")
 )
 
 cursor = conn.cursor()
