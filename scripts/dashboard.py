@@ -18,7 +18,10 @@ conn = snowflake.connector.connect(
 )
 
 cursor = conn.cursor()
-cursor.execute("SELECT * FROM CTA_DB.CTA_SCHEMA.RIDERSHIP")
+cursor.execute("""
+    SELECT * FROM CTA_DB.CTA_SCHEMA.RIDERSHIP 
+    WHERE YEAR(SERVICE_DATE) <= 2025
+""")
 df = cursor.fetch_pandas_all()
 conn.close()
 
@@ -33,7 +36,7 @@ df["month_name"] = df["service_date"].dt.strftime("%B")
 yearly = df.groupby("year")["total_rides"].sum().reset_index()
 fig_yearly = px.line(
     yearly, x="year", y="total_rides",
-    title="CTA Yearly Ridership (2001–2026)",
+    title="CTA Yearly Ridership (2001–2025)",
     markers=True,
     labels={"year": "Year", "total_rides": "Total Rides"}
 )
@@ -78,7 +81,7 @@ app.layout = html.Div([
     html.Div([
         html.H1("CTA Performance Analytics Platform",
                 style={"color": "white", "margin": "0", "fontSize": "24px"}),
-        html.P("25 Years of Chicago Transit Authority Ridership Data",
+        html.P("25 Years of Chicago Transit Authority Ridership Data (2001–2025)",
                style={"color": "#ccc", "margin": "5px 0 0 0"})
     ], style={
         "backgroundColor": "#003087",
@@ -90,7 +93,7 @@ app.layout = html.Div([
     html.Div([
         html.Div([
             html.H3("11.1 Billion", style={"margin": "0", "color": "#003087"}),
-            html.P("Total Rides (2001–2026)", style={"margin": "5px 0 0 0", "color": "#666"})
+            html.P("Total Rides (2001–2025)", style={"margin": "5px 0 0 0", "color": "#666"})
         ], style={"backgroundColor": "white", "padding": "20px", "borderRadius": "8px",
                   "boxShadow": "0 2px 4px rgba(0,0,0,0.1)", "flex": "1", "textAlign": "center"}),
 
