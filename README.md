@@ -8,7 +8,7 @@ A data pipeline and analytics project built to analyze 25 years of Chicago Trans
 ## Live Demo & Repository
 
 - 🌐 Live Dashboard: [https://cta-analytics.onrender.com](https://cta-analytics.onrender.com)
-- 💻 GitHub Repository:[https://github.com/AthuAC/cta-analytics](https://github.com/atharvachaskar/cta-analytics)
+- 💻 GitHub Repository:[https://github.com/atharvachaskar/cta-analytics](https://github.com/atharvachaskar/cta-analytics)
 
 > Note: The dashboard is hosted on Render's free tier and may take up to 50 seconds to load if it has been inactive.
 
