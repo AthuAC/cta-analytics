@@ -53,3 +53,7 @@ print("=" * 45)
 covid = df[df["year"].isin([2019, 2020, 2021])]
 covid_yearly = covid.groupby("year")["total_rides"].sum()
 print(covid_yearly.to_string())
+
+recovery = df[df["year"].isin([2019, 2025])].groupby("year")[["bus", "rail_boardings"]].sum()
+print(recovery)
+print(recovery.pct_change())

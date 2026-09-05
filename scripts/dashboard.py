@@ -1,32 +1,10 @@
 import pandas as pd
-import snowflake.connector
-from dotenv import load_dotenv
-import os
+from sqlalchemy import create_engine
 from dash import Dash, dcc, html
 import plotly.express as px
 
-load_dotenv()
-
-# ── Load Data from Snowflake ──────────────────────────────────
-conn = snowflake.connector.connect(
-    user=os.getenv("SNOWFLAKE_USER"),
-    password=os.getenv("SNOWFLAKE_PASSWORD"),
-    account=os.getenv("SNOWFLAKE_ACCOUNT"),
-    warehouse=os.getenv("SNOWFLAKE_WAREHOUSE"),
-    database=os.getenv("SNOWFLAKE_DATABASE"),
-    schema=os.getenv("SNOWFLAKE_SCHEMA")
-)
-
-cursor = conn.cursor()
-cursor.execute("""
-    SELECT * FROM CTA_DB.CTA_SCHEMA.RIDERSHIP 
-    WHERE YEAR(SERVICE_DATE) <= 2025
-""")
-df = cursor.fetch_pandas_all()
-conn.close()
-
-# Fix column names to lowercase
-df.columns = df.columns.str.lower()
+engine = create_engine("sqlite:///db/cta_analytics.db")
+df = pd.read_sql("SELECT * FROM ridership WHERE strftime('%Y', service_date) <= '2025'", engine)
 df["service_date"] = pd.to_datetime(df["service_date"])
 df["year"] = df["service_date"].dt.year
 df["month_name"] = df["service_date"].dt.strftime("%B")
@@ -139,7 +117,7 @@ app.layout = html.Div([
 
     # Footer
     html.Div([
-        html.P("⚡ Powered by Snowflake | 📊 Data: Chicago Data Portal | 🚀 Deployed on Render",
+        html.P("📊 Data: Chicago Data Portal | 🚀 Deployed on Render",
             style={"textAlign": "center", "color": "#999",
                     "fontSize": "12px", "padding": "15px",
                     "borderTop": "1px solid #ddd",
